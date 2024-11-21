@@ -113,7 +113,7 @@ int main()
 
 	printf("heapSize = %d ,huffmancode %d\n", heapSize, huffmanCode->prequency);
 
-	huffman_preorder(huffmanCode);
+	huffman_preorder(0,huffmanCode);
 
 
 	setencode_table(encode_table, tempencode_table, 0, huffmanCode);
@@ -316,7 +316,7 @@ void insert(NODE* newNode)
 	heapSize++;
 	curIdx = heapSize;
 
-	while (curIdx != 1 && newNode->prequency < heapTable[curIdx / 2]->prequency)
+	while ((curIdx > 1) && ((newNode->prequency) <= ( heapTable[curIdx / 2]->prequency)))
 	{
 		heapTable[curIdx] = heapTable[curIdx / 2];
 		curIdx /= 2;
@@ -418,16 +418,16 @@ void huffman_ineorder(NODE* t)
 
 }
 //전위 순회
-void huffman_preorder(NODE* t)
+void huffman_preorder(int dep,NODE* t)
 {
 	if (t == NULL)
 	{
 		return;
 	}
 
-	printf("%s cnt = %d data %c\n", __FUNCTION__, t->prequency, t->alphbet);
-	huffman_preorder(t->left);
-	huffman_preorder(t->right);
+	printf("[%s] dep = %d, cnt = %d data %c\n", __FUNCTION__,dep, t->prequency, t->alphbet);
+	huffman_preorder(dep+1,t->left);
+	huffman_preorder(dep+1, t->right);
 
 }
 
